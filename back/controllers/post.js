@@ -2,32 +2,33 @@ const Post = require('../models/Post');
  const fs = require('fs');
 
  //add one post
-exports.createPost = (req ,res ) => {
-  // // console.log(req.body.file)
-  // const postObject = JSON.parse(req.body);
-  // // console.log(postObject)
-  // delete postObject._id;
-  // console.log(req.body)
-  // const post = new Post({
-  //   ...sauceObject,
-  //   imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-  // });
-  const post = new Post({
-    title:req.body.title,
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.body.selectedFile}`
-  });// dynamic URL depending on server path
+ exports.createPost = (req ,res ) => {
+
+  console.log('req.file', req.file);
+  console.log('req.body', req.body);
+  //console.log('JSON.parse(req.body)', JSON.parse(req.body));
+  console.log('=======================================');
+  //return;
   
-  // // // save new post in database
-  // console.log(post)
-  post.save()
+  //req.body.title
+  //req.body.selectedFile
+  
+    //const postObject = JSON.parse(req.body);
+    const postObject = req.body;
+    delete postObject._id;
+    const post = new Post({
+      ...postObject,
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    });
+    // dynamic URL depending on server path
+    // save new post in database
+    post.save()
     .then(post => {
       const message = 'the post was added';
-      console.log(post+'was added')
       res.json({ message, data: post});
     })
     .catch(error => {
       const message = 'the post could not be added, please try again later' ;
-      console.log('the post could not be added, please try again later')
       res.status(500).json({message, data:error });
     });
   }

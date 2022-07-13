@@ -8,17 +8,26 @@ const CreatePost = () => {
   const [selectedFile, setSelectedFile] = useState("");
 
   const submitForm = (e) => {
-    e.preventDefault();
-
-    axios.post("http://localhost:3500/api/post",{
-      "title":title,
-      "selectedFile":selectedFile
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-
+		e.preventDefault();
+		let formData = new FormData();
+		formData.append("image", selectedFile);
+		formData.append("title", title);
+		formData.append("selectedFile", selectedFile.name);
+		axios({
+			method: 'post',
+			url: 'http://localhost:3500/api/post',
+			data: formData,
+			header: {
+				'Accept': 'application/json',
+				'Content-Type': 'multipart/form-data',
+			}
+		})
+		.then(function(response) {
+			console.log(response);
+		})
+		.catch(function(response) {
+			console.log(response);
+		});
   };
 
   return (
@@ -32,7 +41,7 @@ const CreatePost = () => {
 
         <input
           type="file"
-          onChange={(e) => setSelectedFile(e.target.files[0].name)}
+          onChange={(e) => setSelectedFile(e.target.files[0])}
           // onChange={(e) => setSelectedFile(e.target.files[0])}
         />
 
@@ -43,72 +52,6 @@ const CreatePost = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//   const [title, setTitle] = useState("");
-//   const [selectedFile, setSelectedFile] = useState(null)
-//   const [message, setMessage] = useState("")
-  
-  
-//   let handleSubmit = (e) => {
-//     e.preventDefault();
-//     const formData = new FormData();
-//   formData.append("title", title);
-//   formData.append("imageUrl", selectedFile);
-//   axios.post('http://localhost:3500/api/post/',formData)
-//   .then(function (response) {
-//     console.log(response);
-//     if (response.status === 200) {
-//       setTitle("");
-//       setMessage("User created successfully");
-//     } else {
-//       setMessage("Some error occured");
-//     }
-//   })
-//   .catch(function (error) {
-//       console.log(formData)
-//       setMessage("Some error occured"+error);
-//       console.log( error);
-//     });
-
-//   };
-//  return(
-  
-//   <form onSubmit={handleSubmit}>
-//     <input
-//       type="text"
-//       value={title}
-//       placeholder="title"
-//       onChange={(e) => setTitle(e.target.value)}
-//     />
-//      <input
-//           type="file"
-//           onChange={(e) => setSelectedFile(e.target.files[0])}
-//         />
-
-//     <button type="submit">Create</button>
-
-//     <div className="message">{message ? <p>{message}</p> : null}</div>
-//   </form>
-
-//  )
 };
 
 export default CreatePost;
