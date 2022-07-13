@@ -1,44 +1,65 @@
 import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import "./Login.css";
+import axios from "axios";
 
-export default function Login() {
+const LogInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function validateForm() {
-    return email.length > 0 && password.length > 0;
-  }
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const emailError = document.querySelector(".email.error");
+    const passwordError = document.querySelector(".password.error");
 
-  function handleSubmit(event) {
-    event.preventDefault();
-  }
+    axios({
+      method: "post",
+      url: `http://localhost:3500/api/user/login`,
+      withCredentials: true,
+      data: {
+        email,
+        password,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.data.errors) {
+          emailError.innerHTML = res.data.errors.email;
+          passwordError.innerHTML = res.data.errors.password;
+        } else {
+          window.location = "/";
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
-    <div className="Login">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group size="lg" controlId="email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            autoFocus
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group size="lg" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-        <Button block="true" size="lg" type="submit" disabled={!validateForm()}>
-          Login
-        </Button>
-      </Form>
-    </div>
+    <form action="" onSubmit={handleLogin} id="sign-up-form">
+      <label htmlFor="email">Email</label>
+      <br />
+      <input
+        type="text"
+        name="email"
+        id="email"
+        onChange={(e) => setEmail(e.target.value)}
+        value={email}
+      />
+      <div className="email error"></div>
+      <br />
+      <label htmlFor="password">Mot de passe</label>
+      <br />
+      <input
+        type="password"
+        name="password"
+        id="password"
+        onChange={(e) => setPassword(e.target.value)}
+        value={password}
+      />
+      <div className="password error"></div>
+      <br />
+      <input type="submit" value="Se connecter" />
+    </form>
   );
-}
+};
+
+export default LogInForm;

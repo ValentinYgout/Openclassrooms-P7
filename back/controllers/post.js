@@ -3,29 +3,43 @@ const Post = require('../models/Post');
 
  //add one post
 exports.createPost = (req ,res ) => {
-  const postObject = JSON.parse(req.body.post);
-  delete postObject._id;
+  // // console.log(req.body.file)
+  // const postObject = JSON.parse(req.body);
+  // // console.log(postObject)
+  // delete postObject._id;
+  // console.log(req.body)
+  // const post = new Post({
+  //   ...sauceObject,
+  //   imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  // });
   const post = new Post({
-    ...postObject,
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    title:req.body.title,
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.body.selectedFile}`
   });// dynamic URL depending on server path
-  // save new post in database
+  
+  // // // save new post in database
+  // console.log(post)
   post.save()
     .then(post => {
       const message = 'the post was added';
+      console.log(post+'was added')
       res.json({ message, data: post});
     })
     .catch(error => {
       const message = 'the post could not be added, please try again later' ;
+      console.log('the post could not be added, please try again later')
       res.status(500).json({message, data:error });
     });
   }
 
 // display all posts
+
+
 exports.getAllPosts = (req ,res ) => {
   Post.find()
-    .then(post => res.status(200).json(post))
-    .catch(error => {
+
+  .then(post => res.status(200).json(post))
+  .catch(error => {
       const message = "could not find all posts, please try again later";
       res.status(500).json({message, data:error});
       })

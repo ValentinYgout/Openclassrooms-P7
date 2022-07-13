@@ -1,10 +1,13 @@
 
-function UpdatePost() {
+
+
+function ViewPost() {
     return (
       <div>
-        <h1> ViewPost </h1>
+<h1>ViewPost</h1>
+       
       </div>
     )
   }
   
-  export default UpdatePost
+  export default ViewPost

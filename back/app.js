@@ -11,7 +11,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 app.use(mongoSanitize());
 
 // DB connection
-mongoose.connect(`mongodb+srv://${process.env.DBUSER}:${process.env.DBPASSWORD}@vycluster.hpqa3.mongodb.net/?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://${process.env.DBUSER}:${process.env.DBPASSWORD}@vycluster.hpqa3.mongodb.net/P7?retryWrites=true&w=majority`, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 })
@@ -40,9 +40,9 @@ app.use((req, res, next) => {
 });
 
 const userRoutes = require('./routes/user');
-const sauceRoutes = require("./routes/post");
+const PostRoutes = require("./routes/post");
 app.use('/api/auth', userRoutes);
-// app.use("/api/sauces", sauceRoutes);
-// app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use("/api/post", PostRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
