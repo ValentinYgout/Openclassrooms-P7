@@ -2,6 +2,9 @@ import axios from "axios";
 import React from "react";
 import Post from "../../components/Post";
 
+import "./home.css";
+
+
 const baseURL = "http://localhost:3500/api/post/";
 
 export default function Home() {
@@ -10,7 +13,8 @@ export default function Home() {
   React.useEffect(() => {
     axios.get(baseURL).then((response) => {
       setPost(response.data);
-      console.log(response.data)
+      console.log(post)
+
     });
   }, []);
 
@@ -18,12 +22,15 @@ export default function Home() {
 
   return (
     <ul>
-    {post.map(({ _id,title,imageUrl }) => (
-					<Post
+    {post.map(({ _id,title,imageUrl}) => (
+					<li key={_id}>
+            <Post
 						title={title}
-            key={_id}
+           
+            id={_id}
             imageUrl={imageUrl}
 					/>
+            </li>
 				))}
     </ul>
   );

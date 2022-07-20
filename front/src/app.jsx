@@ -3,34 +3,38 @@ import{BrowserRouter as Router, Routes,Route,
 } from "react-router-dom";
 import Home from './pages/Home';
 import CreatePost from './pages/CreatePost';
-import UpdatePost from './pages/UpdatePost';
 import ViewPost from './pages/ViewPost';
 import Contact from './pages/Contact';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import LogInForm from "./pages/Login";
-import SignUpForm from "./pages/Signup";
+import Login from'./pages/Login'
+import Register from "./pages/Register";
+import RequireAuth from "./components/RequireAuth/RequireAuth";
+import Layout from "./components/Layout";
 
 
 
 const  App =() =>{
     return (
         <Router>
-        <Header />
-   
-        <Routes>
-       
-           <Route path="/" element={<Home/>} />
-           <Route path="/login" element={<LogInForm/>} />
-           <Route path="/signup" element={<SignUpForm/>} />
-           <Route path="createPost" element={<CreatePost/>} />
-           <Route path="/updatePost" element={<UpdatePost/>} />
-           <Route path="/viewPost" element={<ViewPost/>} />
-           <Route path="/contact" element={<Contact/>} />
-    
-        </Routes>
-        <Footer />
-     
+          <Header />
+
+          <Routes>
+             <Route path="/" element={<Layout/>}>
+
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+
+                <Route element={<RequireAuth />}>
+                   <Route path="/" element={<Home />} />
+                   <Route path="createPost" element={<CreatePost />} />
+                   <Route path="/post/:id" element={<ViewPost />} />
+                </Route>
+                <Route path="/contact" element={<Contact />} />
+             </Route>
+          </Routes>
+          <Footer />
+
    
    
      </Router>

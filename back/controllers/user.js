@@ -11,7 +11,8 @@ exports.signup = (req, res, next) => {
         const user = new User({
           username: req.body.username,
           email: req.body.email,
-          password: hash
+          password: hash,
+          roles:{"User":2001}
         });
         user.save()
           .then(() => res.status(201).json({ message: 'User created' }))
@@ -30,10 +31,12 @@ exports.login = (req, res, next) => {
         bcrypt.compare(req.body.password, user.password)
           .then(valid => {
             if (!valid) {
-              return res.status(401).json({message:'Incorrect password' });
+              return res.status(401).json({error:'Incorrect password' });
             }
             res.status(200).json({
               userId: user._id,
+              username: user.username,
+              roles: user.roles,
               token: jwt.sign(
                 { userId: user._id },
                 hashkey,

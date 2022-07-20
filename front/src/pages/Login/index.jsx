@@ -1,65 +1,107 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useRef, useState, useEffect, } from 'react';
+import useAuth from '../../hooks/useAuth';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-const LogInForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const emailError = document.querySelector(".email.error");
-    const passwordError = document.querySelector(".password.error");
+import axios from 'axios';
+const LOGIN_URL = 'http://localhost:3500/api/auth/login';
 
-    axios({
-      method: "post",
-      url: `http://localhost:3500/api/user/login`,
-      withCredentials: true,
-      data: {
-        email,
-        password,
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        if (res.data.errors) {
-          emailError.innerHTML = res.data.errors.email;
-          passwordError.innerHTML = res.data.errors.password;
-        } else {
-          window.location = "/";
+const Login = () => {
+    const {setAuth} =useAuth();
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || "/"
+
+
+    const emailRef = useRef();
+    const errRef = useRef();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+
+
+    useEffect(() => {
+        emailRef.current.focus();
+    }, [])
+
+    useEffect(() => {
+        setErrMsg('');
+    }, [email, password])
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post(LOGIN_URL,
+                JSON.stringify({ email, password }),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: false
+                }
+            );
+            console.log(response.data)
+              
+            const username = response.data.username
+            const accessToken = response.data.token;
+            const roles = response.data.roles;
+            setAuth({ username, roles ,accessToken });
+            setEmail('');
+            setPassword('');
+            navigate(from,{replace: true})
+        } catch (err) {
+          console.log(err)
+            if (!err.response) {
+                setErrMsg('No Server Response');
+            } else if (err.response.status === 400) {
+                setErrMsg('Missing email or Password');
+            } else if (err.response.status === 401) {
+                setErrMsg('Unauthorized');
+            } else {
+                setErrMsg('Login Failed');
+            }
+            errRef.current.focus();
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    }
 
-  return (
-    <form action="" onSubmit={handleLogin} id="sign-up-form">
-      <label htmlFor="email">Email</label>
-      <br />
-      <input
-        type="text"
-        name="email"
-        id="email"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-      />
-      <div className="email error"></div>
-      <br />
-      <label htmlFor="password">Mot de passe</label>
-      <br />
-      <input
-        type="password"
-        name="password"
-        id="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
-      <div className="password error"></div>
-      <br />
-      <input type="submit" value="Se connecter" />
-    </form>
-  );
-};
+    return (
+        <>
+          
+                <section>
+                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                    <h1>Sign In</h1>
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="email">email:</label>
+                        <input
+                            type="text"
+                            id="email"
+                            ref={emailRef}
+                            autoComplete="off"
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
+                            required
+                        />
 
-export default LogInForm;
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
+                            required
+                        />
+                        <button>Sign In</button>
+                    </form>
+                    <p>
+                        Need an Account?<br />
+                        <span className="line">
+                            <Link to="/register">register here</Link>
+                        </span>
+                    </p>
+                </section>
+          
+        </>
+    )
+}
+
+export default Login

@@ -1,11 +1,20 @@
 import React from 'react';
+import "./post.css";
 
-const Post = ({title,key,imageUrl}) => {
+import { Link } from "react-router-dom";
+
+
+
+
+const Post = ({key,title,imageUrl,id}) => {
     return (
-      <li key={key}>
+      
+        <Link to={`/post/${id}`}>
+      <div key={key}>
         <h1 >{title}</h1>
        <img src={imageUrl} alt={title} />
-      </li>
+      </div>
+        </Link>
     );
 };
 
