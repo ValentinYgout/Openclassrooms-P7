@@ -1,37 +1,60 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import Post from "../../components/Post";
+import { useAuth0 } from "@auth0/auth0-react";
+import Like from "../../components/Like";
+
 
 import "./home.css";
 
 
-const baseURL = "http://localhost:3500/api/post/";
+const Posts = () => {
+  const {user, getAccessTokenSilently } = useAuth0();
+ 
+  const [posts, setPosts] = useState(null);
 
-export default function Home() {
-  const [post, setPost] = React.useState(null);
+  useEffect(() => {
+    (async () => {
+      try {
+        const token = await getAccessTokenSilently();
+        const response = await fetch('http://localhost:3500/api/post', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setPosts(await response.json());
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, [getAccessTokenSilently]);
 
-  React.useEffect(() => {
-    axios.get(baseURL).then((response) => {
-      setPost(response.data);
-      console.log(post)
-
-    });
-  }, []);
-
-  if (!post) return null;
+  if (!posts) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <ul>
-    {post.map(({ _id,title,imageUrl}) => (
-					<li key={_id}>
-            <Post
-						title={title}
-           
-            id={_id}
-            imageUrl={imageUrl}
-					/>
-            </li>
-				))}
-    </ul>
+{posts.map(({ _id,title,imageUrl,author}) => (
+      <li key={_id}>
+        <Post
+        title={title}
+       
+        id={_id}
+        imageUrl={imageUrl}
+      />
+      <span>by {author}</span>
+      <Like/>
+        </li>
+    ))}
+</ul>
   );
-}
+};
+
+export default Posts;
+
+
+
+
+
+

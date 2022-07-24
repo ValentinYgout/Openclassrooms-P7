@@ -1,25 +1,39 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
+import {useAuth0,withAuthenticationRequired } from '@auth0/auth0-react';
+import Loading from '../../components/Loading';
+
+
 
 const CreatePost = () => {
+  const { user } = useAuth0();
 
+  const userId = user.sub
+  const author = user.name
+  const { getAccessTokenSilently } = useAuth0();
   const [title, setTitle] = useState("");
   const [selectedFile, setSelectedFile] = useState("");
 
-  const submitForm = (e) => {
+  const submitForm = async(e) => {
+    const token = await getAccessTokenSilently();
+    console.log(user.name)
 		e.preventDefault();
 		let formData = new FormData();
 		formData.append("image", selectedFile);
 		formData.append("title", title);
+    formData.append("userId", userId);
+    formData.append("author", author);
 		formData.append("selectedFile", selectedFile.name);
 		axios({
 			method: 'post',
 			url: 'http://localhost:3500/api/post',
 			data: formData,
-			header: {
+			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`,
+				'Content-Type': 'multipart/form-data'
+        
 			}
 		})
 		.then(function(response) {
@@ -54,4 +68,7 @@ const CreatePost = () => {
 
 };
 
-export default CreatePost;
+
+export default withAuthenticationRequired(CreatePost, {
+  onRedirecting: () => <Loading />,
+});

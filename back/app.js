@@ -8,6 +8,11 @@ require('dotenv').config();
 const path = require('path');
 const mongoose = require('mongoose');
 const mongoSanitize = require('express-mongo-sanitize');
+const { expressjwt: jwt } = require("express-jwt");
+var jwks = require('jwks-rsa');
+
+
+
 app.use(mongoSanitize());
 
 // DB connection
@@ -39,10 +44,29 @@ app.use((req, res, next) => {
 	next();
 });
 
+const jwtCheck= jwt({
+	secret: jwks.expressJwtSecret({
+	  cache: true,
+	  rateLimit: true,
+	  jwksRequestsPerMinute: 5,
+	  jwksUri: 'https://dev-5bvir81f.us.auth0.com/.well-known/jwks.json'
+	}),
+	audience: 'http://localhost:3500/api/',
+	issuer: 'https://dev-5bvir81f.us.auth0.com/',
+	algorithms: ['RS256']
+  }).unless({path:[new RegExp('/images/*/', 'i') ]});
+ 
+
+app.use(jwtCheck)
+
+
 const userRoutes = require('./routes/user');
 const PostRoutes = require("./routes/post");
 app.use('/api/auth', userRoutes);
 app.use("/api/post", PostRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
+
+
 
 module.exports = app;

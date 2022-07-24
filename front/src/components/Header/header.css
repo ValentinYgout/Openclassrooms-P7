@@ -1,3 +1,13 @@
 .HeaderLinks{
     margin-left: 30px;
 }
+
+.nav-1{
+display: flex;
+justify-content: space-between;
+
+}
+/* .nav2 {
+    
+
+} */

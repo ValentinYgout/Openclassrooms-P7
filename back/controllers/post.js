@@ -37,6 +37,7 @@ const Post = require('../models/Post');
 
 
 exports.getAllPosts = (req ,res ) => {
+  
   Post.find()
 
   .then(post => res.status(200).json(post))
@@ -59,23 +60,28 @@ exports.getOnePost = (req ,res ) => {
 //modify one post
 exports.updatePost = (req, res, next) => {
     if (req.file) {
+  //  console.log('req.body',req.body)
+   console.log('req.file',req.file)
       // if modifying image, delete old one
       Post.findOne({ _id: req.params.id })
         .then(post => {
+          console.log('post',post)
            if (!post) {
           return res.status(404).json({ message: "post not found !"});
         }
               const filename = post.imageUrl.split('/images/')[1];
                 // add new image and update data
+                console.log(`${req.protocol}://${req.get('host')}/images/${req.file.filename}`)
                 const postObject = {
-                  ...JSON.parse(req.body.post),
+                  ...JSON.parse(req.body),
                   imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-                  };
+                };
+                console.log(postObject, 'postObject')
                 Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
                 .then(() => {
                   
                   fs.unlink(`images/${filename}`, (err=>{
-                    if (err) console.log(err);
+                    if (err) console.log(err,'at fs unlink');
                     else {
                       console.log(`deleted images/${filename}`);
                     }
@@ -121,6 +127,7 @@ exports.deletePost = (req ,res ) => {
 
 //rate a post
 exports.ratePost = (req, res, ) => {
+  console.log(req.body.like)
   if (req.body.like == 0){
     Post.findOne({ _id: req.params.id })
       .then(posts => {
