@@ -35,7 +35,7 @@ const Posts = () => {
 
   return (
     <ul>
-{posts.map(({ _id,title,imageUrl,author}) => (
+{posts.map(({ _id,title,imageUrl,author,likes,dislikes,usersLiked,usersDisliked}) => (
       <li key={_id}>
         <Post
         title={title}
@@ -44,7 +44,13 @@ const Posts = () => {
         imageUrl={imageUrl}
       />
       <span>by {author}</span>
-      <Like/>
+      <Like
+          id={_id}
+          likes = {likes}
+          dislikes = {dislikes}
+          usersLiked = {usersLiked}
+          usersDisliked = {usersDisliked}
+      />
         </li>
     ))}
 </ul>

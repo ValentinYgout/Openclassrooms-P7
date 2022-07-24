@@ -76,26 +76,26 @@ const Like =  (props) => {
       }, []);
 
 console.log('HOW MANY TIMES HERE?')
-    const shouldbe= async()=>{
-        const usersLikedList =props.usersLiked
-        const currentUserId = user.sub
-        console.log( usersLikedList)
-        console.log( currentUserId)
-        console.log( usersLikedList.find(x=>x === currentUserId))
+    // const shouldbe= async()=>{
+    //     const usersLikedList =props.usersLiked
+    //     const currentUserId = user.sub
+    //     console.log( usersLikedList)
+    //     console.log( currentUserId)
+    //     console.log( usersLikedList.find(x=>x === currentUserId))
       
              
-                    if( usersLikedList.find(x=>x === currentUserId) === currentUserId){
-                        console.log('setislike TRUE')
-                        return setIsLike(true)
-                    }
-                    else{
-                        console.log('setislike FALSE')
-                        return setIsLike(false)
-                    }
+    //                 if( usersLikedList.find(x=>x === currentUserId) === currentUserId){
+    //                     console.log('setislike TRUE')
+    //                     return setIsLike(true)
+    //                 }
+    //                 else{
+    //                     console.log('setislike FALSE')
+    //                     return setIsLike(false)
+    //                 }
                    
 
 
-    }
+    // }
   console.log(like+ ' like before handle')
     const  HandleLike = async() => {
         setLike(like+(isLiked?-1:1));
@@ -166,7 +166,7 @@ console.log('HOW MANY TIMES HERE?')
             
           {"Dislikes"} | {dislike}
         </button>
-        <button onClick={shouldbe}>bro</button>
+       
       </>
     )
 };
