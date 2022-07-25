@@ -149,7 +149,8 @@ console.log('HOW MANY TIMES HERE?')
     
     return (
         
-        <>
+        
+        <div className="LikeDislike">
         <button
         disabled={Disliked}
           className={"like-button " + (isLiked ? "liked" : "")}
@@ -166,8 +167,11 @@ console.log('HOW MANY TIMES HERE?')
             
           {"Dislikes"} | {dislike}
         </button>
+        </div>
        
-      </>
+        
+       
+    
     )
 };
 

@@ -3,11 +3,14 @@ import axios from 'axios';
 import { useState } from 'react';
 import {useAuth0,withAuthenticationRequired } from '@auth0/auth0-react';
 import Loading from '../../components/Loading';
+import { useNavigate } from 'react-router-dom';
+import('./style.css')
 
 
 
 const CreatePost = () => {
   const { user } = useAuth0();
+  const navigate= useNavigate()
 
   const userId = user.sub
   const author = user.name
@@ -38,6 +41,8 @@ const CreatePost = () => {
 		})
 		.then(function(response) {
 			console.log(response);
+      navigate("/home")
+
 		})
 		.catch(function(response) {
 			console.log(response);
@@ -45,7 +50,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="App">
+    <div className="create-post">
       <form>
       <input
           type="text"

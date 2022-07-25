@@ -19,6 +19,10 @@ import UserProfile from "./components/UserProfile";
 // import Layout from "./components/Layout";
 import Loading from "./components/Loading";
 import axios from'axios'
+import LandingPage from "./pages/LandingPage";
+import { useNavigate } from "react-router-dom";
+import './style/style.css';
+
 
 
 
@@ -47,9 +51,9 @@ const App = () => {
            {/* <Route path="/" element={<Layout/>}> */}
            
 
-
+           <Route path="/" element={<LandingPage/>} />
            {/* <Route element={<RequireAuth />}> */}
-           <Route path="/" element={<Home />} />
+           <Route path="/home" element={<Home/>} />
            <Route path ='/userprofile' element ={<UserProfile/>}/>
            <Route path="createPost" element={<CreatePost />} />
            <Route path="/post/:id" element={<ViewPost />} />

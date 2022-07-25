@@ -1,0 +1,14 @@
+.create-post{
+    height:  85vh;
+    width: 25vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+
+}
+.create-post >form{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    justify-content: end;
+}

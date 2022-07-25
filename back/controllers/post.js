@@ -73,7 +73,7 @@ exports.updatePost = (req, res, next) => {
                 // add new image and update data
                 console.log(`${req.protocol}://${req.get('host')}/images/${req.file.filename}`)
                 const postObject = {
-                  ...JSON.parse(req.body),
+                  ...req.body,
                   imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
                 };
                 console.log(postObject, 'postObject')

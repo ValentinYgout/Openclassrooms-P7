@@ -7,6 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 
 const EditDelete = (props) => {
+    const {refreshPost,id}=props
     const [isEditing,setIsEditing]= useState(false)
     const [title, setTitle] = useState("");
     const [selectedFile, setSelectedFile] = useState("");
@@ -16,6 +17,7 @@ const EditDelete = (props) => {
         const token = await getAccessTokenSilently();
         console.log(token);
         console.log(props.id)
+        
 
         axios.delete(`http://localhost:3500/api/post/${props.id}`, {
             headers: {
@@ -46,7 +48,13 @@ const EditDelete = (props) => {
         
 			}
         })
-            .then(response => console.log('Edit successful'))
+            .then(response =>{
+                console.log(response,'Edit successful')
+                refreshPost()
+                
+            } )
+            // window.location.reload()
+
             .catch(error => {
                 alert(error.message)
                 console.log(error.message);

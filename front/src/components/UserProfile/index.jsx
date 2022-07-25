@@ -1,4 +1,5 @@
 import React from "react";
+import './style.css'
 
 
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
@@ -12,16 +13,19 @@ console.log(user)
 
 
   return (
-    isAuthenticated && (
+    
         
-      <div>
+      <div className="userprofile">
             
         <img src={picture} alt="profile" />
-       <h2>{name}</h2>
-       <h2>{nickname}</h2>:
-        <p>{email}</p>
+        <div>
+
+       <h2>Nom:  {name}</h2>
+       <h2> Username:  {nickname}</h2>
+        <p> email:  {email}</p>
+        </div>
       </div>
-    )
+    
    
   );
 };

@@ -1,4 +1,35 @@
+li{
+  
+    height: 720px;
+    border-bottom: 1px solid darkred;
+   
+    
+}
 img{
-    height: 400px;
-    width: 400px;
+    margin-top: 5px;
+    height: 600px;
+    width: 600px;
+}
+.Posts{
+    margin-top: 10px;
+    width: 670px;
+    height: 670px
+  
+}
+.Posts h1{
+   height: 30px;
+   margin: 10px 0px;
+ 
+  
+}
+.Posts span{
+    margin: 10px 0px;
+  
+   
+ }
+.Posts:hover{
+   opacity: 0.80;
+   
+   
+
 }

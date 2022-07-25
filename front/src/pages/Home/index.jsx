@@ -1,15 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import Post from "../../components/Post";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import Like from "../../components/Like";
+import Loading from "../../components/Loading";
 
 
 import "./home.css";
 
 
-const Posts = () => {
+const Home = () => {
   const {user, getAccessTokenSilently } = useAuth0();
+  console.log(user,'user')
  
   const [posts, setPosts] = useState(null);
 
@@ -37,19 +39,18 @@ const Posts = () => {
     <ul>
 {posts.map(({ _id,title,imageUrl,author,likes,dislikes,usersLiked,usersDisliked}) => (
       <li key={_id}>
+        <Like
+            id={_id}
+            likes = {likes}
+            dislikes = {dislikes}
+            usersLiked = {usersLiked}
+            usersDisliked = {usersDisliked}
+        />
         <Post
         title={title}
-       
+        author={author}
         id={_id}
         imageUrl={imageUrl}
-      />
-      <span>by {author}</span>
-      <Like
-          id={_id}
-          likes = {likes}
-          dislikes = {dislikes}
-          usersLiked = {usersLiked}
-          usersDisliked = {usersDisliked}
       />
         </li>
     ))}
@@ -57,7 +58,9 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default withAuthenticationRequired(Home, {
+  onRedirecting: () => <Loading />,
+});
 
 
 

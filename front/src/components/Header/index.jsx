@@ -12,19 +12,9 @@ import AuthenticationButton from "../AuthenticationButton";
 
 
 function Header() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
 
-// const[isOnline,setIsOnline ]= useState(useToken().token)
 
-  // console.log(useToken().token)
 
- const handleLogout= ()=>{
-  console.log("test")
-  window.localStorage.clear();
-  setIsOnline(false)
-  // Navigate('/login')
-
- }
 
  return (
    
@@ -32,19 +22,15 @@ function Header() {
      
     
 
-      <Link className="HeaderLinks" to="/">Home</Link>
+      <Link className="HeaderLinks" to="/home">Home</Link>
       <Link className="HeaderLinks"to="/createPost">CreatePost</Link>
       <Link className="HeaderLinks" to="userprofile">profile</Link>
-
-      <div className="nav-2">
-      {/* <Link className="HeaderLinks" to="/"onClick={handleLogout}>Logout</Link>
-     <Link className="HeaderLinks" to="/login">Login</Link>
-         <Link className="HeaderLinks" to="/register">Signup</Link> */}
-            <AuthenticationButton />
-      </div>
+        <AuthenticationButton />
 
 
     </nav>
+
+    
   )
 }
 
