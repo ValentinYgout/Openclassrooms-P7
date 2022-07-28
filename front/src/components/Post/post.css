@@ -1,35 +1,48 @@
 li{
   
     height: 720px;
-    border-bottom: 1px solid darkred;
+   
    
     
 }
-img{
+
+.Posts img{
     margin-top: 5px;
     height: 600px;
     width: 600px;
+    border-radius: 20px;
+    
 }
 .Posts{
     margin-top: 10px;
-    width: 670px;
-    height: 670px
+    padding: 10px;
+    width: 600px;
+    height: 675px;
+    border:2px solid black;
+    border-radius: 20px;
+    background: white;
   
 }
 .Posts h1{
    height: 30px;
    margin: 10px 0px;
+   text-decoration: none;
  
   
 }
 .Posts span{
     margin: 10px 0px;
+   
   
    
  }
 .Posts:hover{
-   opacity: 0.80;
-   
+  
+ 
+    /* color: #FD2D01; */
+    transition: 0.2s;
+    box-shadow: 2px 2px 15px blue;
    
 
 }
+

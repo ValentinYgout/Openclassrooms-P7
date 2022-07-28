@@ -3,7 +3,8 @@
    
 }
 footer{
-   
+ position: fixed;
+ bottom: 0;
     width: 100%;
     height: 5vh;
     background-color:rgb(255, 193, 193) ;

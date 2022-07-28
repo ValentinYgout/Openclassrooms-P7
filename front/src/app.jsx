@@ -9,18 +9,13 @@ import ViewPost from './pages/ViewPost';
 import Contact from './pages/Contact';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Login from './pages/Login'
-import Register from "./pages/Register";
-import useToken from './hooks/useToken';
-import LoginButton from "./components/LoginButton";
-import LogoutButton from "./components/LogoutButton";
+
 import UserProfile from "./components/UserProfile";
-// import RequireAuth from "./components/RequireAuth/RequireAuth";
-// import Layout from "./components/Layout";
+
 import Loading from "./components/Loading";
-import axios from'axios'
+
 import LandingPage from "./pages/LandingPage";
-import { useNavigate } from "react-router-dom";
+
 import './style/style.css';
 
 
@@ -61,7 +56,7 @@ const App = () => {
            <Route path="/contact" element={<Contact />} />
            {/* </Route> */}
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
   </div>
          
          

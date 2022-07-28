@@ -53,12 +53,14 @@ const CreatePost = () => {
     <div className="create-post">
       <form>
       <input
+      placeholder='Title'
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
 
         <input
+        
           type="file"
           onChange={(e) => setSelectedFile(e.target.files[0])}
           // onChange={(e) => setSelectedFile(e.target.files[0])}

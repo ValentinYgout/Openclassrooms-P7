@@ -10,7 +10,9 @@ const mongoose = require('mongoose');
 const mongoSanitize = require('express-mongo-sanitize');
 const { expressjwt: jwt } = require("express-jwt");
 var jwks = require('jwks-rsa');
+const jwtAuthz = require('express-jwt-authz')
 
+// const checkPermissions =jwtAuthz("write:post")
 
 
 app.use(mongoSanitize());
@@ -60,9 +62,9 @@ const jwtCheck= jwt({
 app.use(jwtCheck)
 
 
-const userRoutes = require('./routes/user');
+// const userRoutes = require('./routes/user');
 const PostRoutes = require("./routes/post");
-app.use('/api/auth', userRoutes);
+// app.use('/api/auth', userRoutes);
 app.use("/api/post", PostRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 

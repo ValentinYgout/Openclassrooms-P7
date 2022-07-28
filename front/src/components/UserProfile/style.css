@@ -1,11 +1,33 @@
 .userprofile{
-    height: 85vh;
+    width: 80%;
+   margin-top: 20vh;
+    height: 50vh;
     display: flex;
     align-items: center;
+    justify-content: center;
+    border-top: 4px solid black;
+    border-bottom: 4px solid black;
 }
 
 .userprofile img{
-    margin: 20px 20px 0 0;
+    margin: 0 20px 0 0;
+  
     height: 100px;
     width: 100px;
+    border-radius: 60px;
 }
+th,td{
+
+    padding: 0 5px;
+    border: 2px solid black;
+
+    /* border-collapse: collapse; */
+    height: 50px;
+    border-radius: 60px;
+    font-size: 20px;
+    text-align: center;
+}
+table{
+   
+}
+

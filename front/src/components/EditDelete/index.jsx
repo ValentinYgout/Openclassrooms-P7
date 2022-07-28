@@ -7,19 +7,28 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 
 const EditDelete = (props) => {
+    const { user,getIdTokenClaims} = useAuth0();
+    const  isAuthor=  props.userId === user.sub?true:false
+    const isAdmin = user["https://example.com/roles"].find(x=>x === "admin")?true:false
+    console.log(getIdTokenClaims('roles'))
+    console.log(user["https://example.com/roles"][0], "admin")
+    console.log(isAdmin,'is this account an admin??')
+    console.log(isAuthor, 'is author? can we render edit???????')
+    const isAllowedToEdit =isAdmin||isAuthor
+    console.log(isAllowedToEdit,"isallowedtoedittttt because", isAdmin, "isadmin",isAuthor,"isAuthor")
     const {refreshPost,id}=props
     const [isEditing,setIsEditing]= useState(false)
     const [title, setTitle] = useState("");
     const [selectedFile, setSelectedFile] = useState("");
     const { getAccessTokenSilently } = useAuth0();
 
+    console.log(props.author)
     const handleDelete = async () => {
         const token = await getAccessTokenSilently();
         console.log(token);
-        console.log(props.id)
         
 
-        axios.delete(`http://localhost:3500/api/post/${props.id}`, {
+        axios.delete(`http://localhost:3500/api/post/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -69,6 +78,8 @@ const EditDelete = (props) => {
     }
 
     return (
+
+        isAllowedToEdit?
         isEditing?
             <div>
               <form>
@@ -93,6 +104,7 @@ const EditDelete = (props) => {
                 <button className="" onClick={() => handleEdit()}>edit</button>
                 <button className="" onClick={() => handleDelete()}>delete</button>
             </div>
+            :<></>
 
        
 

@@ -1,0 +1,13 @@
+.authenticationDiv{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+.authButton{
+    font-size: 20px;
+    height: 30px;
+    width: 100px;
+
+
+
+}

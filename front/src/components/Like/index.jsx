@@ -21,87 +21,17 @@ const Like =  (props) => {
      const   [Disliked, setDisliked] = useState(( props?.usersDisliked?.find(x=>x === user?.sub) === user?.sub)?true:false)
      
      
-     useEffect(() => {
-         console.log('useeffect here', props)
-    //     console.log("useEffect executed (component mounted)")
-
-    //     // console.log(user.sub)
-    //     // const usersLikedList =props.usersLiked
-    //     // const currentUserId = user.sub
-    //     //     const userDislikedList= props.usersDisliked
-    //     //     console.log(usersLikedList)
-        
-    //     //    const userLikedCheck = ()=>{
-    //     //     usersLikedList.find(x=>x == currentUserId)
-    //     //    }
-    //     //    const onlineUserLikedPost =  function (){
-    //     //     if(userLikedCheck === currentUserId){
-    //     //         return setIsLike(true)
-    //     //     }
-    //     //     else{
-    //     //         return setIsLike(false)
-    //     //     }
-    //     //    }
-    //     //    onlineUserLikedPost()
-
-    //     //    const userdisLikedCheck = ()=>{
-    //     //     console.log(userDislikedList)
-    //     //     userDislikedList.find(x=>x == currentUserId)
-    //     //    }
-    //     //    const onlineUserDislikedPost =  function (){
-    //     //     if(userdisLikedCheck == undefined || userDislikedList){
-    //     //         return setDisliked(false)
-    //     //     }
-    //     //     else{
-    //     //         return setDisliked(true)
-    //     //     }
-    //     //    }
-    //     //    onlineUserDislikedPost()
-           return()=>{
-            console.log("read once???????")
-            const usersLikedList =props.usersLiked
-            const currentUserId = user.sub
-     
-            console.log( usersLikedList)
-            console.log( currentUserId)
-            console.log(props, ' return of stupid ass useeffect')
-            // console.log( usersLikedList.find(x=>x === currentUserId))
-    //         const usersLikedList =props.usersLiked
-    //         const currentUserId = user.sub
-    //         console.log(usersLikedList)
-    //         console.log(currentUserId)
-    //         //    console.log( usersLikedList.find(x=>x === currentUserId))
-    //         console.log("useEffect cleanup (component unmounted)")
-           }
-      }, []);
-
-console.log('HOW MANY TIMES HERE?')
-    // const shouldbe= async()=>{
-    //     const usersLikedList =props.usersLiked
-    //     const currentUserId = user.sub
-    //     console.log( usersLikedList)
-    //     console.log( currentUserId)
-    //     console.log( usersLikedList.find(x=>x === currentUserId))
-      
-             
-    //                 if( usersLikedList.find(x=>x === currentUserId) === currentUserId){
-    //                     console.log('setislike TRUE')
-    //                     return setIsLike(true)
-    //                 }
-    //                 else{
-    //                     console.log('setislike FALSE')
-    //                     return setIsLike(false)
-    //                 }
-                   
 
 
-    // }
-  console.log(like+ ' like before handle')
+
+
+
+
     const  HandleLike = async() => {
         setLike(like+(isLiked?-1:1));
         setIsLike(!isLiked);
         
-  console.log(like+ ' like after set')
+
         const  token= await getAccessTokenSilently();
     
        const data ={

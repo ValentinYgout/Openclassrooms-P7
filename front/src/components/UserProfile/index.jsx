@@ -18,12 +18,25 @@ console.log(user)
       <div className="userprofile">
             
         <img src={picture} alt="profile" />
-        <div>
-
-       <h2>Nom:  {name}</h2>
-       <h2> Username:  {nickname}</h2>
-        <p> email:  {email}</p>
-        </div>
+        <table >
+        <tr>
+                <th width="30%">Role</th>
+            
+                <td>{user['https://example.com/roles'][0]}</td>
+              </tr>
+              <tr>
+                <th width="30%">Email</th>
+            
+                <td>{email}</td>
+              </tr>
+              <tr>
+                <th width="30%">Nickname	</th>
+           
+                <td>{nickname}</td>
+              </tr>
+           
+      
+            </table>
       </div>
     
    

@@ -12,14 +12,20 @@ import './style.css'
 
 function ViewPost() {
   // const [token, setToken] = useState("");
+
+
+ 
+  
   const [post, setPost] = useState({});
   const { user,getAccessTokenSilently } = useAuth0();
   const {id} = useParams()
   const [shouldRefetchData, setShouldRefetchData] = useState(false);
   // const [ViewedPost,setViewedPost]= useState(post)
+  
 
+  console.log(post?.userId,  user?.sub)
   // const currentUserId = user.sub
- 
+  
   useEffect(() => {
     (async () => {
       try {
@@ -32,8 +38,10 @@ function ViewPost() {
         });
         // setToken(token)
         setPost(await response.json());
+
         
         // console.log('currently displaying this',ViewedPost)
+    
      
       } catch (e) {
         console.error(e);
@@ -63,12 +71,13 @@ function ViewPost() {
         usersLiked = {post?.usersLiked}
         usersDisliked = {post?.usersDisliked}
         />
-          <EditDelete
+        <EditDelete
         
-          refreshPost={()=>setShouldRefetchData(!shouldRefetchData)}
-
-          id= {id}
-          />
+        refreshPost={()=>setShouldRefetchData(!shouldRefetchData)}
+        id= {id}
+        userId={post.userId}
+        />
+         
 				
     </div>
     )
