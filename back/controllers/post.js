@@ -127,6 +127,7 @@ exports.deletePost = (req ,res ) => {
 
 //rate a post
 exports.ratePost = (req, res, ) => {
+  console.log(req.auth.permissions, 'AUTh')
   console.log(req.body.like)
   if (req.body.like == 0){
     Post.findOne({ _id: req.params.id })

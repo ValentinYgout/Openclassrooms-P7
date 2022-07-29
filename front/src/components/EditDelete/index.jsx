@@ -77,6 +77,8 @@ const EditDelete = (props) => {
         setIsEditing(false)
     }
 
+    
+
     return (
 
         isAllowedToEdit?

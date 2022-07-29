@@ -19,11 +19,16 @@ console.log(user)
             
         <img src={picture} alt="profile" />
         <table >
+          <tbody>
+            
         <tr>
+          
                 <th width="30%">Role</th>
             
                 <td>{user['https://example.com/roles'][0]}</td>
               </tr>
+       
+          
               <tr>
                 <th width="30%">Email</th>
             
@@ -34,6 +39,7 @@ console.log(user)
            
                 <td>{nickname}</td>
               </tr>
+              </tbody>
            
       
             </table>
