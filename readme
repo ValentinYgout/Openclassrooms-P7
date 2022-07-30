@@ -1,0 +1,17 @@
+For front:
+
+cd front
+yarn add all
+yarn start
+
+For back
+
+cd back
+npm install
+nodemon server
+
+
+
+
+
+

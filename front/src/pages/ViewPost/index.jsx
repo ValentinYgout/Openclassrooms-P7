@@ -24,7 +24,7 @@ function ViewPost() {
   
 
   console.log(post?.userId,  user?.sub)
-  // const currentUserId = user.sub
+
   
   useEffect(() => {
     (async () => {
@@ -48,6 +48,7 @@ function ViewPost() {
       }
     })();
   }, [getAccessTokenSilently,shouldRefetchData]);
+console.log(user)
 
   if (!post) return null;
 
@@ -55,28 +56,30 @@ function ViewPost() {
   console.log(shouldRefetchData,'shouldRefetchData')
     return (
       <div className="viewpost"   key={post._id}>
-    
+      <Like
+    //   token={token}
+    //  currentUserId={currentUserId}
+      id={post?._id}
+      likes = {post?.likes}
+      dislikes = {post?.dislikes}
+      usersLiked = {post?.usersLiked}
+      usersDisliked = {post?.usersDisliked}
+      />
+    <div className="PostEdit">
+
 					<Post
 						title={post.title}
             author={post.author}
             id={post._id}
             imageUrl={post.imageUrl}
 					/>
-        <Like
-      //   token={token}
-      //  currentUserId={currentUserId}
-        id={post?._id}
-        likes = {post?.likes}
-        dislikes = {post?.dislikes}
-        usersLiked = {post?.usersLiked}
-        usersDisliked = {post?.usersDisliked}
-        />
         <EditDelete
         
         refreshPost={()=>setShouldRefetchData(!shouldRefetchData)}
         id= {id}
         userId={post.userId}
         />
+    </div>
          
 				
     </div>

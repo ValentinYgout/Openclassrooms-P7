@@ -11,3 +11,19 @@
 
 
 }
+
+@media (max-width:600px)  {
+    .authenticationDiv{
+      
+    
+        row-gap: 5px;
+        width: 100px;
+    }
+    .authButton{
+    
+        height: 40px;
+        width: 40px;
+    
+    
+    }
+ }

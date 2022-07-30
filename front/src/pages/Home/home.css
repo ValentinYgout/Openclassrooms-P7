@@ -17,3 +17,17 @@ li{
    
     list-style-type: none; 
 }
+
+@media (max-width:600px)  {
+    ul{
+        margin: 10vh 0 0 0;
+       width: 380px;
+    }
+    li{
+        display: flex;
+        align-items: center;
+    width: 380px;
+    height: 300px;
+    }
+    
+ }

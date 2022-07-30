@@ -6,10 +6,14 @@ import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import  Loading from '../Loading';
 
 const userProfile = () => {
-  const { user, isAuthenticated } = useAuth0();
+  const { user } = useAuth0();
+  
   
 console.log(user)
-  const { name, picture, email,nickname } = user;
+  const {picture, email,nickname } = user;
+
+
+
 
 
   return (
@@ -20,15 +24,9 @@ console.log(user)
         <img src={picture} alt="profile" />
         <table >
           <tbody>
-            
-        <tr>
-          
-                <th width="30%">Role</th>
-            
-                <td>{user['https://example.com/roles'][0]}</td>
-              </tr>
+
+
        
-          
               <tr>
                 <th width="30%">Email</th>
             

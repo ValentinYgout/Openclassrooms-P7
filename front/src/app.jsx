@@ -25,6 +25,7 @@ import './style/style.css';
 
 
 
+
 const App = () => {
    const { isLoading } = useAuth0();
 

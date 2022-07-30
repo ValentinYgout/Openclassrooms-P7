@@ -1,14 +1,18 @@
 .create-post{
-    height:  85vh;
-    width: 25vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
+
+    width: 80%;
+    margin-top: 20vh;
+     height: 50vh;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     border-top: 4px solid black;
+     border-bottom: 4px solid black;
 
 }
 .create-post >form{
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-    justify-content: end;
+    justify-content: flex-end;
 }

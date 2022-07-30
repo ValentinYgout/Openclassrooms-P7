@@ -1,17 +1,20 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, } from 'react';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
 
 
+
+// n
 
 
 const EditDelete = (props) => {
+    const navigate =useNavigate()
     const { user,getIdTokenClaims} = useAuth0();
     const  isAuthor=  props.userId === user.sub?true:false
-    const isAdmin = user["https://example.com/roles"].find(x=>x === "admin")?true:false
+    const isAdmin = user["Roles/roles"]?.find(x=>x === "Admin")?true:false
     console.log(getIdTokenClaims('roles'))
-    console.log(user["https://example.com/roles"][0], "admin")
     console.log(isAdmin,'is this account an admin??')
     console.log(isAuthor, 'is author? can we render edit???????')
     const isAllowedToEdit =isAdmin||isAuthor
@@ -33,21 +36,24 @@ const EditDelete = (props) => {
                 Authorization: `Bearer ${token}`
             }
         })
-            .then(response => console.log('Delete successful'))
+            .then(response =>(console.log('Delete successful'),
+            alert('The post was deleted, you will now be redirected to Home'),  navigate("/home"))
+            
+            )
             .catch(error => {
                 console.log(error.message);
                 console.error('There was an error!', error);
             });
     }
     const handleSendEdit = async () => {
-        console.log('test')
+  
         const token = await getAccessTokenSilently();
-        console.log(props)
+   
         let formData = new FormData();
 		formData.append("image", selectedFile);
 		formData.append("title", title);
         formData.append("selectedFile", selectedFile.name);
-        console.log(formData)
+   
        
         axios.put('http://localhost:3500/api/post/' + props.id, formData, {
             headers: {
@@ -59,6 +65,7 @@ const EditDelete = (props) => {
         })
             .then(response =>{
                 console.log(response,'Edit successful')
+                alert("post edited")
                 refreshPost()
                 
             } )
@@ -83,7 +90,7 @@ const EditDelete = (props) => {
 
         isAllowedToEdit?
         isEditing?
-            <div>
+            <div className='EditDelete'>
               <form>
       <input
           type="text"
@@ -102,7 +109,7 @@ const EditDelete = (props) => {
                 <button disabled className="" onClick={() => handleDelete()}>delete</button>
             </div>
             :
-            <div>
+            <div className='EditDelete'>
                 <button className="" onClick={() => handleEdit()}>edit</button>
                 <button className="" onClick={() => handleDelete()}>delete</button>
             </div>

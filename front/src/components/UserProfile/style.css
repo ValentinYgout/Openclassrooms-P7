@@ -27,7 +27,14 @@ th,td{
     font-size: 20px;
     text-align: center;
 }
-table{
-   
+@media (max-width:600px) {
+    th,td{
+
+        font-size: 15px;
+       
+    }
 }
+
+
+
 

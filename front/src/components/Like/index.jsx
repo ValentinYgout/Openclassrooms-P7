@@ -7,16 +7,14 @@ import axios from 'axios';
 const Like =  (props) => {
     const {getAccessTokenSilently } = useAuth0();
     
-    // console.log(usersLikedList)
-    // console.log(currentUserId)
-    // console.log( usersLikedList.find(x=>x === currentUserId))
+
     const {user } = useAuth0();
     const [like, setLike] = useState(props.likes)
-    console.log(like, ' when does it work??')
+   
 
 
     const   [isLiked, setIsLike] = useState( ( props?.usersLiked?.find(x=>x === user?.sub) === user?.sub)?true:false)
-    // console.log(( props?.usersLiked?.find(x=>x === user?.sub) === user?.sub)?true:false)
+
      const [dislike, setDislike] = useState(props.dislikes)
      const   [Disliked, setDisliked] = useState(( props?.usersDisliked?.find(x=>x === user?.sub) === user?.sub)?true:false)
      
@@ -62,9 +60,7 @@ const Like =  (props) => {
         const data ={
              like: DislikeValue(),
              userId:user.sub}
-             console.log(data)
-
-             console.log({like}+ "data to send")
+          
 
              axios.post(`http://localhost:3500/api/post/${props.id}/like`,data,{headers:{
                  Authorization: `Bearer ${token}`

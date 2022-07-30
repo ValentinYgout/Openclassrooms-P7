@@ -1,0 +1,11 @@
+.LandingPage{
+    width: 80%;
+   margin-top: 20vh;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 4px solid black;
+    border-bottom: 4px solid black;
+
+}

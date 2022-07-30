@@ -10,8 +10,11 @@ import "./home.css";
 
 
 const Home = () => {
-  const {user, getAccessTokenSilently } = useAuth0();
-  console.log(user,'user')
+  const {user, getAccessTokenSilently,getIdTokenClaims } = useAuth0();
+  console.log(user)
+  console.log(getIdTokenClaims())
+
+
  
   const [posts, setPosts] = useState(null);
 
@@ -36,6 +39,7 @@ const Home = () => {
   }
 
   return (
+
     <ul>
 {posts.map(({ _id,title,imageUrl,author,likes,dislikes,usersLiked,usersDisliked}) => (
       <li key={_id}>

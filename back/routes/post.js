@@ -22,7 +22,7 @@ const checkIfUserCanEditOrDeletePost = async (req, res, next) => {
         return next()
     }
 
-    throw new Error( canUserEditPost,'Nique ta mère')
+    throw new Error( canUserEditPost,'cant edit')
     
 }
 router.put('/:id', checkIfUserCanEditOrDeletePost, multer, postCtrl.updatePost);
