@@ -13,14 +13,15 @@ const CreatePost = () => {
   const navigate= useNavigate()
 
   const userId = user.sub
-  const author = user.name
+  const author = user.nickname
+
   const { getAccessTokenSilently } = useAuth0();
+
   const [title, setTitle] = useState("");
   const [selectedFile, setSelectedFile] = useState("");
 
   const submitForm = async(e) => {
     const token = await getAccessTokenSilently();
-    console.log(user.name)
 		e.preventDefault();
 		let formData = new FormData();
 		formData.append("image", selectedFile);
@@ -60,7 +61,6 @@ const CreatePost = () => {
         />
 
         <input
-        
           type="file"
           onChange={(e) => setSelectedFile(e.target.files[0])}
           // onChange={(e) => setSelectedFile(e.target.files[0])}

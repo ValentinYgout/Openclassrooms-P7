@@ -23,7 +23,7 @@ function Header() {
       <img src= {logo} alt="" />
       <Link className="HeaderLinks" to="/home">Home</Link>
       <Link className="HeaderLinks"to="/createPost">CreatePost</Link>
-      <Link className="HeaderLinks" to="userprofile">Profile</Link>
+      <Link className="HeaderLinks" to="/userprofile">Profile</Link>
         <AuthenticationButton />
 
 

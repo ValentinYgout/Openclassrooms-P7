@@ -12,9 +12,6 @@ const postSchema = mongoose.Schema({
     usersLiked: { type: [String] },
     usersDisliked: { type: [String] }
 })
-// const postSchema = mongoose.Schema({
-//     title: { type: String, required: [true, "please enter a title"] },
-//     imageUrl: { type: String, required: [false, "please upload a picture"] },
-// })
+
 
 module.exports = mongoose.model("Post", postSchema)

@@ -10,12 +10,7 @@ import "./home.css";
 
 
 const Home = () => {
-  const {user, getAccessTokenSilently,getIdTokenClaims } = useAuth0();
-  console.log(user)
-  console.log(getIdTokenClaims())
-
-
- 
+  const { getAccessTokenSilently } = useAuth0();
   const [posts, setPosts] = useState(null);
 
   useEffect(() => {
@@ -41,24 +36,24 @@ const Home = () => {
   return (
 
     <ul>
-{posts.map(({ _id,title,imageUrl,author,likes,dislikes,usersLiked,usersDisliked}) => (
-      <li key={_id}>
-        <Like
+      {posts.map(({ _id, title, imageUrl, author, likes, dislikes, usersLiked, usersDisliked }) => (
+        <li key={_id}>
+          <Like
             id={_id}
-            likes = {likes}
-            dislikes = {dislikes}
-            usersLiked = {usersLiked}
-            usersDisliked = {usersDisliked}
-        />
-        <Post
-        title={title}
-        author={author}
-        id={_id}
-        imageUrl={imageUrl}
-      />
+            likes={likes}
+            dislikes={dislikes}
+            usersLiked={usersLiked}
+            usersDisliked={usersDisliked}
+          />
+          <Post
+            title={title}
+            author={author}
+            id={_id}
+            imageUrl={imageUrl}
+          />
         </li>
-    ))}
-</ul>
+      ))}
+    </ul>
   );
 };
 

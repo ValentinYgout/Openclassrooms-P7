@@ -10,9 +10,7 @@ const mongoose = require('mongoose');
 const mongoSanitize = require('express-mongo-sanitize');
 const { expressjwt: jwt } = require("express-jwt");
 var jwks = require('jwks-rsa');
-const jwtAuthz = require('express-jwt-authz')
 
-// const checkPermissions =jwtAuthz("write:post")
 
 
 app.use(mongoSanitize());

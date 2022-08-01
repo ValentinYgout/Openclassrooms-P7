@@ -7,47 +7,44 @@ import './style.css'
 
 
 
-// n
 
 
 const EditDelete = (props) => {
-    const navigate = useNavigate()
-    const { user, getIdTokenClaims } = useAuth0();
+    const { user} = useAuth0();
+
     const isAuthor = props.userId === user.sub ? true : false
     const isAdmin = user["userRoles"]?.find(x => x === "Admin") ? true : false
-    console.log(getIdTokenClaims('roles'))
-    console.log(isAdmin, 'is this account an admin??')
-    console.log(isAuthor, 'is author? can we render edit???????')
     const isAllowedToEdit = isAdmin || isAuthor
-    console.log(isAllowedToEdit, "isallowedtoedittttt because", isAdmin, "isadmin", isAuthor, "isAuthor")
-    const { refreshPost, id } = props
+
+    const navigate = useNavigate()
+
+   
+    const {refreshPost, id } = props
+
     const [isEditing, setIsEditing] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
-
     const [title, setTitle] = useState("");
     const [selectedFile, setSelectedFile] = useState("");
+
     const { getAccessTokenSilently } = useAuth0();
 
-    console.log(props.author)
     const handleDelete = async () => {
         const token = await getAccessTokenSilently();
-        console.log(token);
-
-
         axios.delete(`http://localhost:3500/api/post/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-            .then(response => (console.log('Delete successful'),
-                alert('The post was deleted, you will now be redirected to Home'), navigate("/home"))
-
-            )
+            .then(response => {
+                alert('The post was deleted, you will now be redirected to Home')
+                navigate("/home")
+            })
             .catch(error => {
                 console.log(error.message);
                 console.error('There was an error!', error);
             });
     }
+
     const handleSendEdit = async () => {
 
         const token = await getAccessTokenSilently();

@@ -4,23 +4,14 @@ const Post = require('../models/Post');
  //add one post
  exports.createPost = (req ,res ) => {
 
-  console.log('req.file', req.file);
-  console.log('req.body', req.body);
-  //console.log('JSON.parse(req.body)', JSON.parse(req.body));
-  console.log('=======================================');
-  //return;
-  
-  //req.body.title
-  //req.body.selectedFile
-  
-    //const postObject = JSON.parse(req.body);
     const postObject = req.body;
     delete postObject._id;
     const post = new Post({
       ...postObject,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      // dynamic URL depending on server path
     });
-    // dynamic URL depending on server path
+
     // save new post in database
     post.save()
     .then(post => {
@@ -37,7 +28,6 @@ const Post = require('../models/Post');
 
 
 exports.getAllPosts = (req ,res ) => {
-  
   Post.find()
 
   .then(post => res.status(200).json(post))
@@ -46,7 +36,6 @@ exports.getAllPosts = (req ,res ) => {
       res.status(500).json({message, data:error});
       })
 };
-
 //display one post according to its ID
 exports.getOnePost = (req ,res ) => {
   Post.findOne({ _id: req.params.id })
@@ -56,22 +45,18 @@ exports.getOnePost = (req ,res ) => {
       res.status(500).json({ message, data: error });
     })
 };
-
 //modify one post
 exports.updatePost = (req, res, next) => {
     if (req.file) {
-  //  console.log('req.body',req.body)
-   console.log('req.file',req.file)
       // if modifying image, delete old one
       Post.findOne({ _id: req.params.id })
         .then(post => {
-          console.log('post',post)
+
            if (!post) {
           return res.status(404).json({ message: "post not found !"});
         }
               const filename = post.imageUrl.split('/images/')[1];
                 // add new image and update data
-                console.log(`${req.protocol}://${req.get('host')}/images/${req.file.filename}`)
                 const postObject = {
                   ...req.body,
                   imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -79,7 +64,6 @@ exports.updatePost = (req, res, next) => {
                 console.log(postObject, 'postObject')
                 Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
                 .then(() => {
-                  
                   fs.unlink(`images/${filename}`, (err=>{
                     if (err) console.log(err,'at fs unlink');
                     else {
@@ -127,8 +111,7 @@ exports.deletePost = (req ,res ) => {
 
 //rate a post
 exports.ratePost = (req, res, ) => {
-  console.log(req.auth.permissions, 'AUTh')
-  console.log(req.body.like)
+
   if (req.body.like == 0){
     Post.findOne({ _id: req.params.id })
       .then(posts => {
@@ -158,7 +141,7 @@ exports.ratePost = (req, res, ) => {
         res.status(500).json({ message, data: error });
       })
     };
-  
+
   if (req.body.like == 1){
     Post.updateOne( {_id: req.params.id}, {$inc:{likes:1}, $push:{usersLiked: req.body.userId}})
     //add one Like and  push userId in usersLiked
@@ -168,7 +151,6 @@ exports.ratePost = (req, res, ) => {
       res.status(500).json({ message, data: error });
     })
   }
-  
   if (req.body.like == -1){
     Post.updateOne( {_id: req.params.id}, {$inc:{dislikes:1}, $push:{usersDisliked: req.body.userId}})
     //add one Dislike and  push userId in usersLiked
