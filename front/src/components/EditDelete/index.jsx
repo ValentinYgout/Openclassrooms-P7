@@ -10,10 +10,12 @@ import './style.css'
 
 
 const EditDelete = (props) => {
-    const { user} = useAuth0();
+    const userId = localStorage.getItem('userId')
+    const Roles = localStorage.getItem('roles')
+    console.log(Roles)
 
-    const isAuthor = props.userId === user.sub ? true : false
-    const isAdmin = user["userRoles"]?.find(x => x === "Admin") ? true : false
+    const isAuthor = props.userId === userId? true : false
+    const isAdmin = Roles=== "Admin" ? true : false
     const isAllowedToEdit = isAdmin || isAuthor
 
     const navigate = useNavigate()
@@ -26,10 +28,10 @@ const EditDelete = (props) => {
     const [title, setTitle] = useState("");
     const [selectedFile, setSelectedFile] = useState("");
 
-    const { getAccessTokenSilently } = useAuth0();
+    const token = localStorage.getItem('accessToken')
 
     const handleDelete = async () => {
-        const token = await getAccessTokenSilently();
+        
         axios.delete(`http://localhost:3500/api/post/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -47,12 +49,16 @@ const EditDelete = (props) => {
 
     const handleSendEdit = async () => {
 
-        const token = await getAccessTokenSilently();
+        const token = localStorage.getItem('accessToken')
+        const userId = localStorage.getItem('userId')
+        const roles = localStorage.getItem('roles')
 
         let formData = new FormData();
         formData.append("image", selectedFile);
         formData.append("title", title);
-        formData.append("selectedFile", selectedFile.name);
+        formData.append("selectedFile", selectedFile.name)
+        formData.append("userId", userId);
+        formData.append("roles", roles);
 
 
         axios.put('http://localhost:3500/api/post/' + props.id, formData, {

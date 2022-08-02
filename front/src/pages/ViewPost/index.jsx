@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
+
 
 import Post from "../../components/Post"
 import EditDelete from '../../components/EditDelete';
@@ -13,13 +13,13 @@ import './style.css'
 
 function ViewPost() {
   const [post, setPost] = useState({});
-  const { getAccessTokenSilently } = useAuth0();
+  const token = localStorage.getItem('accessToken')
   const { id } = useParams()
   const [shouldRefetchData, setShouldRefetchData] = useState(false);
   useEffect(() => {
     (async () => {
       try {
-        const token = await getAccessTokenSilently();
+        
         const response = await fetch(`http://localhost:3500/api/post/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -31,7 +31,7 @@ function ViewPost() {
         console.error(e);
       }
     })();
-  }, [getAccessTokenSilently, shouldRefetchData]);
+  }, [token, shouldRefetchData]);
   if (!post) return null;
   return (
     <div className="viewpost" key={post._id}>

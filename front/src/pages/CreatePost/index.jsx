@@ -9,19 +9,18 @@ import('./style.css')
 
 
 const CreatePost = () => {
-  const { user } = useAuth0();
+  // const { user } = useAuth0();
   const navigate= useNavigate()
 
-  const userId = user.sub
-  const author = user.nickname
-
-  const { getAccessTokenSilently } = useAuth0();
+  const token = localStorage.getItem('accessToken')
+  const userId = localStorage.getItem('userId')
+  const author = localStorage.getItem('username')
 
   const [title, setTitle] = useState("");
   const [selectedFile, setSelectedFile] = useState("");
 
   const submitForm = async(e) => {
-    const token = await getAccessTokenSilently();
+   
 		e.preventDefault();
 		let formData = new FormData();
 		formData.append("image", selectedFile);
@@ -61,6 +60,7 @@ const CreatePost = () => {
         />
 
         <input
+        
           type="file"
           onChange={(e) => setSelectedFile(e.target.files[0])}
           // onChange={(e) => setSelectedFile(e.target.files[0])}
@@ -76,6 +76,4 @@ const CreatePost = () => {
 };
 
 
-export default withAuthenticationRequired(CreatePost, {
-  onRedirecting: () => <Loading />,
-});
+export default CreatePost

@@ -2,15 +2,17 @@ import React from "react";
 import './style.css'
 
 
-import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+
 import  Loading from '../Loading';
 
 const userProfile = () => {
-  const { user } = useAuth0();
+ 
   
   
-console.log(user)
-  const {picture, email,nickname } = user;
+
+  const email= localStorage.getItem('email');
+  const username= localStorage.getItem('username');
+
 
 
 
@@ -21,7 +23,6 @@ console.log(user)
         
       <div className="userprofile">
             
-        <img src={picture} alt="profile" />
         <table >
           <tbody>
 
@@ -33,9 +34,9 @@ console.log(user)
                 <td>{email}</td>
               </tr>
               <tr>
-                <th width="30%">Nickname	</th>
+                <th width="30%">username	</th>
            
-                <td>{nickname}</td>
+                <td>{username}</td>
               </tr>
               </tbody>
            
@@ -47,6 +48,4 @@ console.log(user)
   );
 };
 
-export default withAuthenticationRequired(userProfile, {
-  onRedirecting: () => <Loading />,
-});
+export default userProfile

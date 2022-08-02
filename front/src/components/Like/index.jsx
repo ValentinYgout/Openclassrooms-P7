@@ -4,21 +4,22 @@ import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
 const Like = (props) => {
-  const { getAccessTokenSilently } = useAuth0();
-  const { user } = useAuth0();
+
+
+  const userId = localStorage.getItem('userId')
 
   const [like, setLike] = useState(props.likes)
-  const [isLiked, setIsLiked] = useState((props?.usersLiked?.find(x => x === user?.sub) === user?.sub) ? true : false)
+  const [isLiked, setIsLiked] = useState((props?.usersLiked?.find(x => x === userId) === userId) ? true : false)
   const [dislike, setDislike] = useState(props.dislikes)
-  const [Disliked, setDisliked] = useState((props?.usersDisliked?.find(x => x === user?.sub) === user?.sub) ? true : false)
+  const [Disliked, setDisliked] = useState((props?.usersDisliked?.find(x => x ===userId) === userId) ? true : false)
   const HandleLike = async () => {
     setLike(like + (isLiked ? -1 : 1));
     setIsLiked(!isLiked);
 
-    const token = await getAccessTokenSilently();
+    const token = localStorage.getItem('accessToken')
     const data = {
       like: !isLiked,
-      userId: user.sub
+      userId: userId
     }
     console.log({ like } + "data to send")
     axios.post(`http://localhost:3500/api/post/${props.id}/like`, data, {
@@ -35,14 +36,14 @@ const Like = (props) => {
   const HandleDislike = async () => {
     setDislike(dislike + (Disliked ? -1 : 1));
     setDisliked(!Disliked);
-    const token = await getAccessTokenSilently();
+    const token = localStorage.getItem('accessToken')
     const DislikeValue = function () {
       if (Disliked == true) { return 0 }
       if (Disliked == false) { return -1 }
     }
     const data = {
       like: DislikeValue(),
-      userId: user.sub
+      userId: userId
     }
     axios.post(`http://localhost:3500/api/post/${props.id}/like`, data, {
       headers: {
